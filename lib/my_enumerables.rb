@@ -13,8 +13,8 @@ class Array
   end
 
   def my_each_with_index()
-    if block_given?
-      for i in 0..self.size-1 do
+    if block_given? 
+      for i in 0..(self.size-1) do
         yield self[i], i
       end
     else
@@ -22,4 +22,47 @@ class Array
     end
   end
 
+  def my_select(&block)
+    arr = []
+    my_each { |value| arr.push(value) if block.call(value)}
+    return arr
+  end
+
+  def my_all?(&block)
+    condition = true
+    my_each { |value| condition = false if !block.call(value)}
+    return condition
+  end
+
+  def my_any?(&block)
+    condition = false
+    my_each { |value| condition = true if block.call(value)}
+    return condition
+  end
+
+  def my_none?(&block)
+    condition = true
+    my_each { |value| condition = false if block.call(value)}
+    return condition
+  end
+
+  def my_count(&block)
+    if block_given?
+      counter = 0
+      my_each { |value| counter += 1 if block.call(value) }
+      return counter
+    else
+      length
+    end
+  end
+
+  def my_map(&block)
+    arr = []
+    my_each { |value| arr.push(block.call(value)) }
+    return arr
+  end
+
+  def my_inject()
+    
+  end
 end
