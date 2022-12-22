@@ -62,7 +62,11 @@ class Array
     return arr
   end
 
-  def my_inject()
-    
+  def my_inject(acc, &block)
+    arr = self.to_a
+    for i in 0..(arr.size-1) do
+      acc = block.call(acc, arr[i])
+    end 
+    return acc
   end
 end
